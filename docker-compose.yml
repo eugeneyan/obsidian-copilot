@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  opensearch:
+    image: opensearchproject/opensearch:2.7.0
+    restart: always
+    volumes:
+      - ./data:/usr/share/opensearch/data
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+      - 9600:9600
+    networks:
+      - obsidian-copilot
+
+  obsidian-copilot:
+    image: obsidian-copilot
+    restart: always # Start container when the exit or docker restarts
+    volumes:
+      - ./data:/obsidian-copilot/data
+      - ${OBSIDIAN_PATH}:/obsidian-vault
+      - ${TRANSFORMER_CACHE}:/root/.cache/huggingface/hub
+    ports:
+      - 8000:8000
+    command: /bin/bash -c "python -m uvicorn src.app:app --host 0.0.0.0 --port 8000"
+    networks:
+      - obsidian-copilot
+
+networks:
+  obsidian-copilot:
+    driver: bridge

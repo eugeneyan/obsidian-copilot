@@ -1,0 +1,5 @@
+.venv/
+data-local/
+data/
+notebooks/
+plugin/
