@@ -23,15 +23,15 @@ build-artifacts: build
 run:
 	docker-compose up
 
-app: build
-	docker run -it --rm --network ${NETWORK} -v "${PWD_PATH}:/obsidian-copilot" -v "$(OBSIDIAN_PATH):/obsidian-vault" -v "${TRANSFORMER_CACHE}:/root/.cache/huggingface/hub" -p 8000:8000 ${IMAGE_TAG} /bin/bash -c "python -m uvicorn src.app:app --reload --host 0.0.0.0 --port 8000"
-
 install-plugin:
 	cp plugin/main.ts plugin/main.js plugin/styles.css plugin/manifest.json ${OBSIDIAN_PATH}.obsidian/plugins/copilot/
 
 # Development
 dev: build
 	docker run -it --rm --network ${NETWORK} -v "${PWD_PATH}:/obsidian-copilot" -v "$(OBSIDIAN_PATH):/obsidian-vault" ${IMAGE_TAG} /bin/bash
+
+app: build
+	docker run -it --rm --network ${NETWORK} -v "${PWD_PATH}:/obsidian-copilot" -v "$(OBSIDIAN_PATH):/obsidian-vault" -v "${TRANSFORMER_CACHE}:/root/.cache/huggingface/hub" -p 8000:8000 ${IMAGE_TAG} /bin/bash -c "python -m uvicorn src.app:app --reload --host 0.0.0.0 --port 8000"
 
 build-local:
 	./build.sh

@@ -33,11 +33,10 @@ export default class CopilotPlugin extends Plugin {
 		}
 
 		// Check if there is already an open pane with the file
-		const existingLeaf = this.app.workspace.getLeavesOfType('markdown').find(leaf => leaf.view.state.file.path === file.path);
+		const existingLeaf = this.app.workspace.getLeavesOfType('markdown').find(leaf => leaf.view.file && leaf.view.file.path === file.path);
 
 		if (existingLeaf) {
 			// If a pane with the file already exists, just set the content
-			existingLeaf.setViewState({ type: "markdown", state: { file: file } });
 			(existingLeaf.view as MarkdownView).editor.setValue(content);
 		} else {
 			// If no pane with the file exists, create a new one
@@ -45,6 +44,7 @@ export default class CopilotPlugin extends Plugin {
 			leaf.openFile(file);
 		}
 	}
+
 
 	private async queryLLM(messages: Array<any>, model: string, temperature = 0.7) {
 		return await fetch('https://api.openai.com/v1/chat/completions', {

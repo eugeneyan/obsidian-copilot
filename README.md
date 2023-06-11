@@ -22,7 +22,7 @@ export OBSIDIAN_PATH = /Users/eugene/obsidian-vault/
 export TRANSFORMER_CACHE = /Users/eugene/.cache/huggingface/hub
 ```
 
-Build the necessary artifacts and start the app
+Build the necessary artifacts and start the retrieval app
 ```
 # Build the docker image
 make build
@@ -37,6 +37,15 @@ make build-artifacts
 # Start the app. You should see this: Uvicorn running on http://0.0.0.0:8000
 make run
 ```
+
+Install the copilot-plugin, enable it in community plugin settings, and update the API key in copilot
+
+```
+make install-plugin
+```
+
+![](assets/enable-copilot.png)
+![](assets/provide-api-key.png)
 
 ## How does it work?
 
