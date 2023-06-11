@@ -10,6 +10,13 @@ This pattern of [retrieval-augmented generation](https://arxiv.org/abs/2005.1140
 
 INSERT DEMO VIDEO
 
+Currently, copilot helps you:
+- Draft sections based on your notes
+- Reflect on your week based on your daily journal entries
+- (There's also a 3rd command to draft a section without context just for comparison)
+
+![](assets/copilot-features.png)
+
 ## Quick start
 
 Clone and update the path to your obsidian-vault and huggingface hub cache
