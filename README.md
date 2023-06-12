@@ -2,11 +2,7 @@
 
 ## How would a copilot for writing look like?
 
-Here's a possible implementation: You write a section header and the copilot retrieves relevant notes and documents and drafts that section for you.
-
-INSERT DEMO VIDEO HERE
-
-This pattern of [retrieval-augmented generation](https://arxiv.org/abs/2005.11401) can also be extended to other use cases. Here's an example where the copilot helps you reflect on your week based on your daily journal entries.
+Here's a possible implementation: You write a section header and the copilot retrieves relevant notes and documents and drafts that section for you. This pattern of [retrieval-augmented generation](https://arxiv.org/abs/2005.11401) can also be extended to other use cases. Here's an example where the copilot helps you reflect on your week based on your daily journal entries.
 
 INSERT DEMO VIDEO
 
@@ -15,7 +11,9 @@ Currently, copilot helps you:
 - Reflect on your week based on your daily journal entries
 - (There's also a 3rd command to draft a section without context just for comparison)
 
-![](assets/copilot-features.png)
+![](assets/features.png)
+
+More technical details on how it works here: [Obsidian-Copilot: A Prototype Assistant for Writing & Thinking](https://eugeneyan.com/writing/obsidian-copilot/)
 
 ## Quick start
 
