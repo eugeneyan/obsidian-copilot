@@ -65,12 +65,11 @@ export default class CopilotPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		async function read(reader: any, editor: Editor): Promise<void> {
+		async function parseStream(reader: any, editor: Editor): Promise<void> {
 			let buffer = '';
 			const { value, done } = await reader.read();
 
 			if (done) {
-				// editor.replaceSelection(selection + '\n\n' + completion.trim());
 				statusBarItemEl.setText('Done with Copilot task!');
 				return;
 			}
@@ -112,7 +111,7 @@ export default class CopilotPlugin extends Plugin {
 				end = buffer.indexOf('\n', start);
 			}
 			buffer = buffer.slice(start);
-			requestAnimationFrame(() => read(reader, editor));
+			requestAnimationFrame(() => parseStream(reader, editor));
 		}
 
 		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
@@ -169,7 +168,7 @@ export default class CopilotPlugin extends Plugin {
 					const reader = response.body?.getReader();
 					editor.replaceSelection(selection + '\n\n');
 
-					await read(reader, editor);
+					await parseStream(reader, editor);
 				}
 			}
 		});
@@ -202,7 +201,7 @@ export default class CopilotPlugin extends Plugin {
 					const reader = response.body?.getReader();
 					editor.replaceSelection(selection + '\n\n');
 
-					await read(reader, editor);
+					await parseStream(reader, editor);
 				}
 			}
 		});
@@ -253,7 +252,7 @@ export default class CopilotPlugin extends Plugin {
 					const reader = response.body?.getReader();
 					editor.replaceSelection('\n');
 
-					await read(reader, editor);
+					await parseStream(reader, editor);
 				}
 			}
 		});

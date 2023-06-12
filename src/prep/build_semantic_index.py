@@ -117,7 +117,7 @@ def build_embedding_array(vault: dict, tokenizer, model, batch_size=4) -> np.nda
 
 
 def query_semantic(query, tokenizer, model, doc_embeddings_array, n_results=10):
-    query_tokenized = tokenizer(query, max_length=512, padding=False, truncation=True, return_tensors='pt')
+    query_tokenized = tokenizer(f'query: {query}', max_length=512, padding=False, truncation=True, return_tensors='pt')
     outputs = model(**query_tokenized)
     query_embedding = average_pool(outputs.last_hidden_state, query_tokenized['attention_mask'])
     query_embedding = F.normalize(query_embedding, p=2, dim=1).detach().numpy()
@@ -136,8 +136,8 @@ if __name__ == '__main__':
     logger.info(f'Vault length: {len(vault):,}')
 
     # Load tokenizer and model
-    tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-small')  # Max token length is 512
-    model = AutoModel.from_pretrained('intfloat/e5-small')
+    tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-small-v2')  # Max token length is 512
+    model = AutoModel.from_pretrained('intfloat/e5-small-v2')
     model.to(DEVICE)
 
     # Build and save embedding index and array

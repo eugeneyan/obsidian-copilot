@@ -32,9 +32,9 @@ logger.info(f'OS client initialized: {os_client.info()}')
 doc_embeddings_array = np.load('data/doc_embeddings_array.npy')
 with open('data/embedding_index.pickle', 'rb') as f:
     embedding_index = pickle.load(f)
-tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-small')  # Max token length is 512
+tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-small-v2')  # Max token length is 512
 os.environ['TOKENIZERS_PARALLELISM'] = 'false'
-model = AutoModel.from_pretrained('intfloat/e5-small')
+model = AutoModel.from_pretrained('intfloat/e5-small-v2')
 logger.info(f'Semantic index loaded with {len(embedding_index)} documents')
 
 
@@ -127,7 +127,6 @@ def get_chunks_from_hits(hits: List[dict], model_name: str = 'gpt-3.5-turbo', ma
     token_count = 0
 
     for id in ranked['id'].tolist():
-        # chunk = ' '.join([chunk.strip() for chunk in vault[id]['chunk']])
         chunk = vault[id]['chunk']
         title = vault[id]['title']
 
@@ -149,7 +148,7 @@ def get_chunks(query: str):
     logger.debug(f'OS hits: {os_hits}')
 
     # Get hits from semantic index
-    semantic_response = query_semantic(f'query: {query}', tokenizer, model, doc_embeddings_array)
+    semantic_response = query_semantic(query, tokenizer, model, doc_embeddings_array)
     semantic_hits = parse_semantic_response(semantic_response, embedding_index)
     logger.debug(f'Semantic hits: {semantic_hits}')
 

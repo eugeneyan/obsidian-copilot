@@ -88,7 +88,7 @@ def create_index(client: OpenSearch, index_name: str) -> None:
         },
         'mappings': {
             'properties': {
-                'title': {'type': 'keyword'},
+                'title': {'type': 'text', 'analyzer': 'english_custom'},
                 'type': {'type': 'keyword'},
                 'path': {'type': 'keyword'},
                 'chunk_header': {'type': 'text', 'analyzer': 'english_custom'},
