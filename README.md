@@ -4,7 +4,7 @@
 
 Here's a possible implementation: You write a section header and the copilot retrieves relevant notes & docs to draft that section for you. This pattern of [retrieval-augmented generation](https://arxiv.org/abs/2005.11401) can also be extended to other use cases. Here's an example where the copilot helps you reflect on your week based on your daily journal entries.
 
-https://github.com/eugeneyan/obsidian-copilot/assets/6831355/88bf32dd-f83a-4041-90be-44c681ad49d8
+https://github.com/eugeneyan/obsidian-copilot/assets/6831355/70ef5412-74a4-449d-9d37-6668ae7ed36a
 
 Currently, copilot helps you:
 - Draft sections based on your notes
