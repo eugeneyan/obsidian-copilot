@@ -41,7 +41,7 @@ make build-artifacts
 
 Running the retrieval app
 ```
-# First, stop the opensearch container (CTRL + C). Then the app. 
+# First, stop the opensearch container (CTRL + C). Then, start the retrieval app. 
 # You should see this: Uvicorn running on http://0.0.0.0:8000
 make run
 ```
