@@ -26,7 +26,7 @@ export OBSIDIAN_PATH = /Users/eugene/obsidian-vault/
 export TRANSFORMER_CACHE = /Users/eugene/.cache/huggingface/hub
 ```
 
-Build the necessary artifacts and start the retrieval app
+Build the OpenSearch and semantic indices
 ```
 # Build the docker image
 make build
@@ -37,8 +37,12 @@ make opensearch
 
 # In ANOTHER terminal, build your artifacts (this can take a while)
 make build-artifacts
+```
 
-# Start the app. You should see this: Uvicorn running on http://0.0.0.0:8000
+Running the retrieval app
+```
+# First, stop the opensearch container (CTRL + C). Then the app. 
+# You should see this: Uvicorn running on http://0.0.0.0:8000
 make run
 ```
 
