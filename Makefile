@@ -13,7 +13,7 @@ IMAGE_TAG = obsidian-copilot
 # Choose your container runtime: docker or podman. Default is docker.
 # echo "export RUNTIME=podman" >> ~/.bashrc and source ~/.profile 
 # if you dont want to keep typing it for each make or change it here
-RUNTIME ?= podman
+RUNTIME ?= docker
 
 # if podman use podman else use docker with ${RUNTIME} command
 
