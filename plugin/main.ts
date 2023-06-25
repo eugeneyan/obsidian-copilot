@@ -219,7 +219,6 @@ export default class CopilotPlugin extends Plugin {
 
 				let pastContent = '';
 				for (let i = 0; i < 7; i++) {
-					date.setDate(date.getDate() - 1);
 					const dateStr = date.toISOString().slice(0, 10);
 					const dailyNote = this.app.vault.getAbstractFileByPath(`daily/${dateStr}.md`);
 					console.log(`dateStr: ${dateStr}, dailyNote: ${dailyNote}`);
@@ -228,6 +227,7 @@ export default class CopilotPlugin extends Plugin {
 						console.log(`dateStr: ${dateStr}, dailyNote: ${dailyNote}, noteContent:\n\n${noteContent}`);
 						pastContent += `Date: ${dateStr}\n\nJournal entry:\n${noteContent}\n---\n`;
 					}
+					date.setDate(date.getDate() - 1);
 				}
 				console.log(`PAST JOURNAL ENTRIES: \n\n${pastContent}`);
 
