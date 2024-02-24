@@ -5,7 +5,7 @@ opensearch-py==2.2.0
 pandas==2.0.1
 python-dotenv==1.0.0
 tiktoken==0.4.0
-tokenizers==0.13.3
+tokenizers>=0.14
 torch==2.0.1
 transformers==4.36.0
 uvicorn[stardard]==0.22.0
