@@ -1,6 +1,6 @@
 # Update this path to your obsidian vault directory
 # now you can also plugin the path in yoru make argument or as a env variable
-# echo "export OBSIDIAN_PATH=/path/to/obsidian" >> ~/.bashrc and source ~/.profile 
+# echo "export OBSIDIAN_PATH=/path/to/obsidian/" >> ~/.bashrc and source ~/.profile 
 export OBSIDIAN_PATH ?= /Users/eugene/obsidian-vault/
 export TRANSFORMER_CACHE ?= /Users/eugene/.cache/huggingface/hub
 
@@ -66,6 +66,7 @@ else
 endif
 
 install-plugin:
+	mkdir -p ${OBSIDIAN_PATH}.obsidian/plugins/copilot/
 	cp plugin/main.ts plugin/main.js plugin/styles.css plugin/manifest.json ${OBSIDIAN_PATH}.obsidian/plugins/copilot/
 
 # Development
