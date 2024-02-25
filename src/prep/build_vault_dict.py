@@ -60,6 +60,18 @@ def chunk_doc_to_dict(lines: List[str], min_chunk_lines=3) -> dict[str, List[str
     chunk_idx = 0
     current_header = None
 
+    # detect if the file starts with YAML front matter, and if so, skip it
+    if lines[0] == "---":
+        # find the next "---" and skip everything in between
+        last_line = 0
+        for i, line in enumerate(lines[1:]):
+            if line.startswith("---"):
+                last_line = i
+                break
+        if last_line == 0:
+            raise ValueError(f"YAML front matter not closed in {filename}")
+        lines = lines[last_line + 1 :]
+
     for line in lines:
         if line.startswith('\n'):  # Skip empty lines
             continue
