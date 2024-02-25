@@ -31,7 +31,10 @@ def get_file_paths(vault_path: str, min_lines: int = 5) -> List[str]:
     """
     paths = []
 
-    for filename in Path(vault_path).glob('*.md'):
+    for filename in Path(vault_path).rglob("*.md"):
+        # exclude files in hidden directories
+        if os.path.relpath(filename, start=vault_path).startswith("."):
+            continue
         with open(filename, 'r', encoding='latin-1') as f:
             lines = f.readlines()
             if len(lines) > min_lines:
