@@ -120,6 +120,7 @@ def get_chunks_from_hits(hits: List[dict], model_name: str = 'gpt-3.5-turbo', ma
     # Combine os and semantic hits and rank them
     df = pd.DataFrame(hits)
     df['score'] = df['rank'].apply(lambda x: 10 - x)
+    # deduplicate chunks by ID, summing their OS and semantic scores
     ranked = df.groupby('id').agg({'score': 'sum'}).sort_values('score', ascending=False).reset_index()
 
     # Get context based on ranked IDs
