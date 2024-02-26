@@ -107,6 +107,24 @@ def create_vault_dict(vault_path: str, paths: List[str]) -> dict[str, dict[str, 
     for filename in paths:
         with open(os.path.join(vault_path, filename), 'r', encoding='utf-8', errors='replace') as f:
             lines = f.readlines()
+
+            # detect if the file is a templater template, and if so, skip it
+            if "<%" in lines[0]:
+                logger.debug(f"Skipping templater template in {filename}")
+                continue
+
+            # detect if the file starts with YAML front matter, and if so, skip it
+            if lines[0] == "---\n":
+                # find the next "---" and skip everything in between
+                last_line = 0
+                for i, line in enumerate(lines[1:]):
+                    if line == ("---\n"):
+                        last_line = i
+                        break
+                if last_line == 0:
+                    raise ValueError(f"YAML front matter not closed in {filename}")
+                lines = lines[last_line + 1 :]
+
             chunks = chunk_doc_to_dict(lines)
 
             if len(chunks) > 0:  # Only add docs with chunks to dict
