@@ -70,7 +70,7 @@ def chunk_doc_to_dict(lines: List[str], min_chunk_lines=3) -> dict[str, List[str
         if '![](assets' in line:  # Skip lines that are images
             continue
 
-        if '##' in line:  # Chunk header = Section header
+        if line.startswith("#"):  # Chunk header = Section header
             current_header = line
 
         if line.startswith('- '):  # Top-level bullet
