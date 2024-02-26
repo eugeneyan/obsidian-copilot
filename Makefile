@@ -1,8 +1,10 @@
-# Update this path to your obsidian vault directory
-# now you can also plugin the path in yoru make argument or as a env variable
-# echo "export OBSIDIAN_PATH=/path/to/obsidian/" >> ~/.bashrc and source ~/.profile 
-export OBSIDIAN_PATH ?= /Users/eugene/obsidian-vault/
-export TRANSFORMER_CACHE ?= /Users/eugene/.cache/huggingface/hub
+# Check whether the `OBSIDIAN_PATH` and `TRANSFORMER_CACHE` env vars are set
+ifndef OBSIDIAN_PATH
+$(error OBSIDIAN_PATH is not set, please refer to the README for more information)
+endif
+ifndef TRANSFORMER_CACHE
+$(error TRANSFORMER_CACHE is not set, please refer to the README for more information)
+endif
 
 # These generally do not need to be changed
 PWD_PATH = ${PWD}
