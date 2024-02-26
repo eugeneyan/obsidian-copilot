@@ -122,7 +122,7 @@ def index_vault(vault: dict[str, dict], client: OpenSearch, index_name: str) -> 
         chunk_header = chunk[0]
         docs_indexed += 1
         if docs_indexed % 100 == 0:
-            logger.info(f'Indexing {chunk_id} - Path: {path} ({docs_indexed:,} docs)')
+            logger.info(f'Indexing {chunk_id} - Path: {path} (progress: {docs_indexed:,} docs)')
 
         docs.append({'_index': index_name, '_id': chunk_id, 'title': title, 'type': doc_type,
                      'path': path, 'chunk_header': chunk_header, 'chunk': chunk})
