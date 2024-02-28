@@ -20,6 +20,7 @@ FROM python:3.9.16-slim as app
 WORKDIR /obsidian-copilot
 
 COPY --from=base /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
+# copy the repo contents into the container
 COPY . .
 
 RUN chmod +x /obsidian-copilot/build.sh

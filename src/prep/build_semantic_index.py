@@ -88,7 +88,9 @@ def build_embedding_array(vault: dict, tokenizer, model, batch_size=4) -> np.nda
 
         # Get path and chunks
         if docs_embedded % 100 == 0:
-            logger.info(f'Embedding document: {chunk_id} ({docs_embedded:,})')
+            logger.info(
+                f"Embedding document: {chunk_id} (progress: {docs_embedded:,} docs embedded)"
+            )
         docs_embedded += 1
         processed_chunk = 'passage: ' + ' '.join(doc['chunk'].split())  # Remove extra whitespace and add prefix
 
