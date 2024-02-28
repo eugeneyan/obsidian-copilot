@@ -107,6 +107,11 @@ def create_vault_dict(vault_path: str, paths: List[str]) -> dict[str, dict[str, 
     for filename in paths:
         with open(os.path.join(vault_path, filename), 'r', encoding='utf-8', errors='replace') as f:
             lines = f.readlines()
+
+            # detect if the file is a templater template, and if so, skip it
+            if "<%" in lines[0]:
+                logger.debug(f"Skipping templater template in {filename}")
+                continue
             chunks = chunk_doc_to_dict(lines)
 
             if len(chunks) > 0:  # Only add docs with chunks to dict
