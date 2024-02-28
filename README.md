@@ -20,11 +20,18 @@ Clone and update the path to your obsidian-vault and huggingface hub cache
 
 ```
 git clone https://github.com/eugeneyan/obsidian-copilot.git
-
-# Open Makefile and update the following paths
-export OBSIDIAN_PATH = /Users/eugene/obsidian-vault/
-export TRANSFORMER_CACHE = /Users/eugene/.cache/huggingface/hub
 ```
+
+Update your `~/.bashrc` or `~/.zshrc` with the `OBSIDIAN_PATH` and `TRANSFORMER_CACHE` paths and then source it.
+Note: the trailing slash is important.
+
+```
+
+export OBSIDIAN_PATH=/path/to/obsidian-vault/
+export TRANSFORMER_CACHE=/path/to/.cache/huggingface/hub
+```
+
+If you don't already have a huggingface hub cache, you can create the directory with `mkdir -p $TRANSFORMER_CACHE`
 
 Build the OpenSearch and semantic indices
 ```
