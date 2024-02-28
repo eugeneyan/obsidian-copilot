@@ -121,7 +121,20 @@ def create_vault_dict(vault_path: str, paths: List[str]) -> dict[str, dict[str, 
                                    'path': str(filename),
                                    'chunk': ''.join(lines)}
 
+                # sometimes, notes follow a template and thus are quite repetitive. For example, stubs for meeting notes.
+                # here, we want to detect if a chunk is an exact duplicate of a previously seen chunk, and if so, skip it
+                seen_chunks = set()
+
                 for chunk_id, chunk in chunks.items():
+                    # check if the chunk is a duplicate
+                    chunk_str = "".join(chunk)
+                    chunk_hash = hash(chunk_str)
+                    if chunk_hash in seen_chunks:
+                        logger.debug(
+                            f"Skipping duplicate chunk in {filename}: {chunk_str}"
+                        )
+                        continue
+
                     chunk_id = f'{filename}-{chunk_id}'
 
                     # Add chunk to vault dict (for shorter context length)
