@@ -143,6 +143,10 @@ def get_chunks_from_hits(hits: List[dict], model_name: str = 'gpt-3.5-turbo', ma
 
 @app.get('/get_chunks')
 def get_chunks(query: str):
+    if not query:
+        raise ValueError(
+            f"Query is empty: {query}. Did you try to draft using an empty selection?"
+        )
     # Get hits from opensearch
     os_response = query_opensearch(query, os_client, INDEX_NAME)
     os_hits = parse_os_response(os_response)
