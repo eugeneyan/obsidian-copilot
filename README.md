@@ -38,7 +38,7 @@ Build the OpenSearch and semantic indices
 # Build the docker image
 make build
 
-# Start the opensearch container and wait for it to start. 
+# Start the opensearch container and wait for it to start.
 # You should see something like this: [c6587bf83572] Node 'c6587bf83572' initialized
 make opensearch
 
@@ -48,7 +48,7 @@ make build-artifacts
 
 Running the retrieval app
 ```
-# First, stop the opensearch container (CTRL + C). Then, start the retrieval app. 
+# First, stop the opensearch container (CTRL + C). Then, start the retrieval app.
 # You should see this: Uvicorn running on http://0.0.0.0:8000
 make run
 ```
@@ -70,6 +70,10 @@ At a high level, when you type a section header, it'll:
     - [Semantic search](https://github.com/eugeneyan/obsidian-copilot/blob/main/src/prep/build_semantic_index.py#L119) (semantic retrieval)
 - The retrieved context is then used to generate paragraphs for the section
 - It is also displayed in a new tab for info
+
+## Contributing
+
+To install the pre-commit hooks, run `pip install pre-commit && pre-commit install` in the root of the repository.
 
 ## TODOs
 
