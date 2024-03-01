@@ -9,6 +9,7 @@ chunk_id: {
     chunk: chunk  # If type = full, then the entire doc.
 }
 """
+
 import argparse
 import os
 import pickle
@@ -20,7 +21,8 @@ from src.logger import logger
 
 
 def get_file_paths(vault_path: str, min_lines: int = 5) -> List[str]:
-    """Get all file paths in a vault
+    """
+    Get all file paths in a vault.
 
     Args:
         vault_path: Path to obsidian vault.
@@ -35,7 +37,7 @@ def get_file_paths(vault_path: str, min_lines: int = 5) -> List[str]:
         # exclude files in hidden directories
         if os.path.relpath(filename, start=vault_path).startswith("."):
             continue
-        with open(filename, 'r', encoding='latin-1') as f:
+        with open(filename, "r", encoding="latin-1") as f:
             lines = f.readlines()
             if len(lines) > min_lines:
                 relative_path = os.path.relpath(filename, start=vault_path)
@@ -45,7 +47,8 @@ def get_file_paths(vault_path: str, min_lines: int = 5) -> List[str]:
 
 
 def chunk_doc_to_dict(lines: List[str], min_chunk_lines=3) -> dict[str, List[str]]:
-    """Chunk the text into a doc into a dictionary, where each new paragraph / top-level bullet in a new chunk.
+    """
+    Chunk the text into a doc into a dictionary, where each new paragraph / top-level bullet in a new chunk.
 
     Args:
         lines: Lines in a document
@@ -61,19 +64,19 @@ def chunk_doc_to_dict(lines: List[str], min_chunk_lines=3) -> dict[str, List[str
     current_header = None
 
     for line in lines:
-        if line.startswith('\n'):  # Skip empty lines
+        if line.startswith("\n"):  # Skip empty lines
             continue
-        if line.startswith('- tag'):  # Skip tags
+        if line.startswith("- tag"):  # Skip tags
             continue
-        if line.startswith('- source'):  # Skip sources
+        if line.startswith("- source"):  # Skip sources
             continue
-        if '![](assets' in line:  # Skip lines that are images
+        if "![](assets" in line:  # Skip lines that are images
             continue
 
         if line.startswith("#"):  # Chunk header = Section header
             current_header = line
 
-        if line.startswith('- '):  # Top-level bullet
+        if line.startswith("- "):  # Top-level bullet
             if current_chunk:  # If chunks accumulated, add it to chunks
                 if len(current_chunk) >= min_chunk_lines:
                     chunks[chunk_idx] = current_chunk
@@ -93,7 +96,8 @@ def chunk_doc_to_dict(lines: List[str], min_chunk_lines=3) -> dict[str, List[str
 
 
 def create_vault_dict(vault_path: str, paths: List[str]) -> dict[str, dict[str, str]]:
-    """Iterate through all paths and create a vault dictionary
+    """
+    Iterate through all paths and create a vault dictionary.
 
     Args:
         vault_path: Path to obsidian vault
@@ -105,7 +109,9 @@ def create_vault_dict(vault_path: str, paths: List[str]) -> dict[str, dict[str, 
     vault = dict()
 
     for filename in paths:
-        with open(os.path.join(vault_path, filename), 'r', encoding='utf-8', errors='replace') as f:
+        with open(
+            os.path.join(vault_path, filename), "r", encoding="utf-8", errors="replace"
+        ) as f:
             lines = f.readlines()
 
             # detect if the file is a templater template, and if so, skip it
@@ -129,10 +135,12 @@ def create_vault_dict(vault_path: str, paths: List[str]) -> dict[str, dict[str, 
 
             if len(chunks) > 0:  # Only add docs with chunks to dict
                 # Add full document to vault dict (for retrieving the entire doc + longer context)
-                vault[filename] = {'title': filename,
-                                   'type': 'doc',  # This is a full document
-                                   'path': str(filename),
-                                   'chunk': ''.join(lines)}
+                vault[filename] = {
+                    "title": filename,
+                    "type": "doc",  # This is a full document
+                    "path": str(filename),
+                    "chunk": "".join(lines),
+                }
 
                 # sometimes, notes follow a template and thus are quite repetitive. For example, stubs for meeting notes.
                 # here, we want to detect if a chunk is an exact duplicate of a previously seen chunk, and if so, skip it
@@ -148,24 +156,28 @@ def create_vault_dict(vault_path: str, paths: List[str]) -> dict[str, dict[str, 
                         )
                         continue
 
-                    chunk_id = f'{filename}-{chunk_id}'
+                    chunk_id = f"{filename}-{chunk_id}"
 
                     # Add chunk to vault dict (for shorter context length)
-                    vault[chunk_id] = {'title': filename,
-                                       'type': 'chunk',  # This is a chunk
-                                       'path': str(filename),
-                                       'chunk': ''.join(chunk)}
+                    vault[chunk_id] = {
+                        "title": filename,
+                        "type": "chunk",  # This is a chunk
+                        "path": str(filename),
+                        "chunk": "".join(chunk),
+                    }
 
     return vault
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Create vault dictionary')
-    parser.add_argument('--vault_path', type=str, help='Path to obsidian vault')  # /Users/eugene/obsidian-vault/
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Create vault dictionary")
+    parser.add_argument(
+        "--vault_path", type=str, help="Path to obsidian vault"
+    )  # /Users/eugene/obsidian-vault/
     args = parser.parse_args()
 
     paths = get_file_paths(args.vault_path)
     vault = create_vault_dict(args.vault_path, paths)
-    logger.info(f'Number of docs in vault: {len(vault):,}')
-    with open('data/vault_dict.pickle', 'wb') as f:
+    logger.info(f"Number of docs in vault: {len(vault):,}")
+    with open("data/vault_dict.pickle", "wb") as f:
         pickle.dump(vault, f, protocol=pickle.HIGHEST_PROTOCOL)

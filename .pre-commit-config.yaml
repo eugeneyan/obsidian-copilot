@@ -1,0 +1,37 @@
+# note: to install, run `pre-commit install`
+# note: if you update this file, run `pre-commit autoupdate`
+default_language_version:
+    python: python3.9
+repos:
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.2.1
+  hooks:
+    # Run the linter.
+    - id: ruff
+    # run on ipynb, too
+      types_or: [ python, pyi, jupyter ]
+      args: ["--fix", "--show-source"]
+    # Run the formatter.
+    - id: ruff-format
+      types_or: [ python, pyi, jupyter ]
+- repo: https://github.com/myint/docformatter
+  rev: v1.7.5
+  hooks:
+    - id: docformatter
+      args: ['--in-place', '--pre-summary-newline', '--make-summary-multi-line', '--wrap-descriptions', '120', '--wrap-summaries', '120']
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.5.0
+  hooks:
+    - id: trailing-whitespace
+    - id: end-of-file-fixer
+      exclude: ".ipynb|.pub"
+    - id: detect-private-key
+    - id: check-added-large-files
+    - id: check-yaml
+    - id: check-toml
+    - id: check-ast
+      language: python
+      types: [python]
+    - id: check-merge-conflict
+      exclude: \.rst$|\.pot?$
+    - id: requirements-txt-fixer
